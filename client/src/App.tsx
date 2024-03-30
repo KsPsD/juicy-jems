@@ -5,23 +5,48 @@ import Shopping from "./Shopping";
 import { WalletConnectProvider } from "./walletConnect";
 import { Home } from "./Home";
 import { initLocalStorage } from "./utils/localStorage";
-import { useEffect } from "react";
-import { useReadContract } from 'wagmi'
+import { useEffect, useState } from "react";
+
 import {abi_json } from './consts'
+import { readContract,type ReadContractParameters  } from "@wagmi/core";
+import { config } from "./walletConnect";
+import Web3 from "web3";
 
 
 
 function App() {
   useEffect(() => {
     initLocalStorage();
+    initWeb3();
   }, []);
 
-  const result = useReadContract({
-    abi: abi_json,
-    address: "0x587D35Eb8A43e2A469eB402a2626F5D9356C112b",
-    functionName: 'name'
-  })
 
+
+
+  const [totalSupply, setTotalSupply] = useState<number>(0);
+  const initWeb3 = async () => {
+    try {
+      
+      const web3 = new Web3('https://rpc.zkatana.gelato.digital/');
+      const abi = abi_json;
+      const contractAddress = "0x8Fba1359F081F96Eb02c602DEDd5722cF50ACC74";
+
+      const contract = new web3.eth.Contract(abi, contractAddress);
+    
+      console.log(contract)
+      console.log("123")
+      const supply = await contract.methods.deposit(100).send({from: '0x33cA2A83053925995233594E79EBa44F14A8d387', gas:'500000'})
+      console.log(supply)
+      console.log(contract.options)
+      
+    
+
+    } catch (error) {
+      console.error("Web3 초기화 오류:", error);
+    }
+  };
+
+  
   return (
     <WalletConnectProvider>
       <Sidebar />
