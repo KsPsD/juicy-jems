@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import ShoppingModal from "./ShoppingModal";
 import { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
+import { ReactComponent as RandomBox } from "./assets/random_box.svg";
 
 interface ItemProps {
   name: string;
@@ -82,12 +83,9 @@ const Shopping = () => {
           alignItems: "center",
         }}
       >
-        <Box
-          sx={{
-            width: "580px",
-            height: "490px",
+        <RandomBox
+          style={{
             cursor: "pointer",
-            backgroundColor: "yellow",
           }}
           onClick={() => setModalOpened(true)}
         />
