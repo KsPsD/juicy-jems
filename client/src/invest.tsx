@@ -22,6 +22,78 @@ export interface InvestItem {
   goal: number;
 }
 
+enum GameTabType {
+  MMORPG = "MMORPG",
+  RTS = "RTS",
+  FPS = "FPS",
+}
+
+const GameTab = (props: { selectedTab: GameTabType }) => {
+  const { selectedTab } = props;
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        marginBottom: "32px",
+        cursor: "pointer",
+      }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          gap: "45px",
+        }}
+      >
+        {[GameTabType.MMORPG, GameTabType.RTS, GameTabType.FPS].map((tab) => {
+          const selected = tab === selectedTab;
+          const style = selected
+            ? {
+                color: "#FBFF3D",
+                fontFamily: "Azo Sans",
+                fontSize: "28px",
+                fontStyle: "italic",
+                fontWeight: 700,
+                lineHeight: "normal",
+              }
+            : {
+                color: "#66666D",
+                fontFamily: "Azo Sans",
+                fontSize: "28px",
+                fontStyle: "normal",
+                fontWeight: 300,
+                lineHeight: "normal",
+                letterSpacing: "-0.28px",
+              };
+          return (
+            <Box>
+              <Box sx={style}>{tab}</Box>
+              {selected && (
+                <Box
+                  sx={{
+                    position: "relative",
+                    height: "4px",
+                    backgroundColor: "#FBFF3D",
+                    zIndex: 1,
+                  }}
+                />
+              )}
+            </Box>
+          );
+        })}
+      </Box>
+      <Box
+        sx={{
+          height: "1px",
+          backgroundColor: "#646464",
+          transform: "translateY(-2px)",
+        }}
+      />
+    </Box>
+  );
+};
+
 function LinearProgressWithLabel(
   props: LinearProgressProps & { value: number }
 ) {
@@ -50,22 +122,6 @@ const Invest: React.FC = () => {
     console.log(isConnected, address);
   }, [isConnected, address]);
 
-  const [progress, setProgress] = useState(
-    Items.map((item) => item.now / item.goal)
-  );
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((prevProgress) =>
-        prevProgress.map((value) => (value >= 100 ? 10 : value + 10))
-      );
-    }, 800);
-
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
-
   const handleOpen = (item: (typeof Items)[0]) => {
     setSelectedItem(item);
     setOpen(true);
@@ -76,13 +132,16 @@ const Invest: React.FC = () => {
   };
 
   return (
-    <div>
-      <Typography variant="h4" gutterBottom>
-        Game Invest
-      </Typography>
+    <Box
+      sx={{
+        margin: "0 auto",
+        maxWidth: "1130px",
+      }}
+    >
+      <GameTab selectedTab={GameTabType.MMORPG} />
       <Grid container spacing={2}>
         {Items.map((item, index) => (
-          <Grid item xs={12} sm={6} key={item.id}>
+          <Grid item xs={4} gap={"25px"} key={item.id}>
             <Paper
               elevation={3}
               sx={{
@@ -91,6 +150,7 @@ const Invest: React.FC = () => {
                 display: "flex",
                 flexDirection: "column",
                 gap: "2em",
+                borderRadius: "16px",
               }}
             >
               <img
@@ -102,7 +162,7 @@ const Invest: React.FC = () => {
                 {item.title}
               </Typography>
               <Typography variant="body1">{item.description}</Typography>
-              <LinearProgressWithLabel value={progress[index]} />
+              <LinearProgressWithLabel value={(item.now / item.goal) * 100} />
               <Button
                 variant="contained"
                 color="primary"
@@ -137,7 +197,7 @@ const Invest: React.FC = () => {
           <Typography variant="body1">{selectedItem?.description}</Typography>
         </Box>
       </Modal>
-    </div>
+    </Box>
   );
 };
 
