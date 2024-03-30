@@ -1,9 +1,8 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-// import Button from "@mui/material/Button";
-// import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { Button } from "@mui/base";
+import { Grid } from "@mui/material";
 
 interface ShoppingModalProps {
   open: boolean;
@@ -83,22 +82,9 @@ const Prices = () => {
   );
 };
 
-const ShoppingModalBody = (props: { onClose: () => void }) => {
+const ProbabilityDetail = (props: { onClose: () => void }) => {
   return (
-    <Box
-      sx={{
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-
-        transform: "translate(-50%, -50%)",
-        width: 400,
-        bgcolor: "background.paper",
-        border: "2px solid #000",
-        boxShadow: 24,
-        p: 4,
-      }}
-    >
+    <div>
       <Box
         sx={{
           display: "flex",
@@ -118,6 +104,74 @@ const ShoppingModalBody = (props: { onClose: () => void }) => {
       >
         <Button onClick={props.onClose}>확인</Button>
       </Box>
+    </div>
+  );
+};
+
+type NeopleGame =
+  | "game1"
+  | "game2"
+  | "game3"
+  | "game4"
+  | "game5"
+  | "game6"
+  | "game7"
+  | "game8";
+
+const ShoppingModalBody = (props: { onClose: () => void }) => {
+  const [selectedGame, setSelectedGame] = React.useState<
+    NeopleGame | undefined
+  >(undefined);
+  return (
+    <Box
+      sx={{
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: "10px",
+
+        transform: "translate(-50%, -50%)",
+        width: 400,
+        bgcolor: "background.paper",
+        border: "2px solid #000",
+        boxShadow: 24,
+        p: 4,
+      }}
+    >
+      <Grid container spacing={2}>
+        {[
+          "game1",
+          "game2",
+          "game3",
+          "game4",
+          "game5",
+          "game6",
+          "game7",
+          "game8",
+        ].map((game) => {
+          return (
+            <Grid item xs={3} key={game}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  cursor: "pointer",
+                  backgroundColor: selectedGame === game ? "gray" : "white",
+                }}
+                onClick={() => setSelectedGame(game as NeopleGame)}
+              >
+                {game}
+              </Box>
+            </Grid>
+          );
+        })}
+      </Grid>
+      {selectedGame && <ProbabilityDetail onClose={props.onClose} />}
     </Box>
   );
 };

@@ -2,12 +2,7 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import ShoppingModal from "./ShoppingModal";
 import { useEffect, useState } from "react";
-import { useAccount, useConnect, useDisconnect } from "wagmi";
-
-
-const ShoppingHeader = () => {
-  return <div>header</div>;
-};
+import { useAccount } from "wagmi";
 
 interface ItemProps {
   name: string;
@@ -68,54 +63,35 @@ const Item = (props: ItemProps) => {
   );
 };
 
-const ItemList = (props: { openModal: () => void }) => {
-  const { openModal } = props;
-  const items = [
-    {
-      name: "item1",
-      src: "",
-    },
-    {
-      name: "item2",
-      src: "",
-    },
-    {
-      name: "item3",
-      src: "",
-    },
-    {
-      name: "item4",
-      src: "",
-    },
-  ];
-  return (
-    <Grid
-      container
-      spacing={2}
-      sx={{
-        maxWidth: "300px",
-      }}
-    >
-      {items.map((item, index) => (
-        <Item key={`item-${index}`} openModal={openModal} {...item} />
-      ))}
-    </Grid>
-  );
-};
-
 const Shopping = () => {
   const [modalOpened, setModalOpened] = useState(false);
   const { isConnected, address } = useAccount();
 
   useEffect(() => {
-
     console.log(isConnected, address);
-  }, [isConnected, address,]);
+  }, [isConnected, address]);
 
   return (
     <div>
-      <ShoppingHeader />
-      <ItemList openModal={() => setModalOpened(true)} />
+      <Box
+        sx={{
+          padding: "0px",
+          height: "calc(100vh - 80px)",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Box
+          sx={{
+            width: "580px",
+            height: "490px",
+            cursor: "pointer",
+            backgroundColor: "yellow",
+          }}
+          onClick={() => setModalOpened(true)}
+        />
+      </Box>
       <ShoppingModal open={modalOpened} onClose={() => setModalOpened(false)} />
     </div>
   );
