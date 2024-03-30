@@ -8,6 +8,7 @@ import { ReactComponent as Progress91 } from "./assets/progress_bar_91_100.svg";
 import { ReactComponent as Progress71 } from "./assets/progress_bar_71_90.svg";
 import { ReactComponent as Progress50 } from "./assets/progress_bar_50_70.svg";
 import { ReactComponent as TwoArrows } from "./assets/two_arrows.svg";
+import DepositWithdrawService from './DepositWithdrawService';
 
 export interface InvestItem {
   id: number;
@@ -16,6 +17,10 @@ export interface InvestItem {
   imageUrl: string;
   now: number;
   goal: number;
+
+}
+interface InvestProps {
+  setBalance: (balance: number) => void;
 }
 
 enum GameTabType {
@@ -23,6 +28,8 @@ enum GameTabType {
   RTS = "RTS",
   FPS = "FPS",
 }
+
+const service = new DepositWithdrawService();
 
 const GameTab = (props: { selectedTab: GameTabType }) => {
   const { selectedTab } = props;
@@ -166,6 +173,12 @@ const Invest: React.FC = () => {
 
   useEffect(() => {
     console.log(isConnected, address);
+    service.withdrawTransaction(100).then((result) => {
+      console.log(result);
+    }).catch((error) => {
+      console.error('Error:', error);
+    });
+
   }, [isConnected, address]);
 
   const handleOpen = (item: (typeof Items)[0]) => {

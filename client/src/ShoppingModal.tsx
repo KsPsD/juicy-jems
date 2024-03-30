@@ -179,11 +179,6 @@ const ShoppingModalBody = (props: { onClose: () => void }) => {
           "game4",
           "game7",
           "game1",
-          "game2",
-          "game3",
-          "game4",
-          "game5",
-          "game6",
           "game7",
          
         ].map((game,index) => {
@@ -361,6 +356,27 @@ const ShoppingModalBody = (props: { onClose: () => void }) => {
           </Box>
          </Box>
         </Box>
+        <Button 
+        style={{
+          alignSelf:"center",
+          width: "186px",
+          height: "50px",
+          flexShrink: 0,
+          borderRadius: "30.435px",
+          background:"var(--neo, #FBFF3D)",
+          boxShadow: "0px 4.348px 8.696px 0px rgba(0, 0, 0, 0.25)",
+          color: "var(--gray5, #333)",
+          textAlign: "center",
+          fontFamily: "Poppins",
+          fontSize: "30px",
+          fontStyle: "normal",
+          fontWeight: 700,
+          lineHeight: "normal"
+          }}
+          onClick={props.onClose}
+          >
+          BUY
+        </Button>
         </>
       }
     </Box>

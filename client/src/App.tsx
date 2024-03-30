@@ -10,19 +10,23 @@ import { abi_json } from "./consts";
 import Web3 from "web3";
 
 import Header from "./Header";
+import DepositWithdrawService from './DepositWithdrawService';
+
+const service = new DepositWithdrawService();
 
 function App() {
+  const  [balance, setBalance] = useState<number>(0);
+
   useEffect(() => {
     initLocalStorage();
     initWeb3();
-  }, []);
+  }, [balance]);
 
   const PRIVATE_KEY =
     "7085b5b3d28e4fe3b8879f9e3255740bcc4475e82735ed81448c731c5a9028ca";
   const User = "0x40BEa87Bc6d629FFE827c46f3191553358742aB8";
   const CA = "0xf55de014Cc9dD632dd00a65f482381C04e1E64d2";
 
-  //web3,CA,User,PRIVATE_KEY,abi 는 상태 관리해주셔야 합니다!!
 
   const [totalSupply, setTotalSupply] = useState<number>(0);
   const initWeb3 = async () => {
@@ -43,7 +47,7 @@ function App() {
   };
 
   //  //deposit tr
-  // async function depositTransaction() {
+  //  async function depositTransaction() {
 
   //   const encodedData = '0x' + web3.eth.abi.encodeFunctionCall({
   //     "inputs": [
@@ -113,7 +117,7 @@ function App() {
         <div style={{ flexGrow: 1 }}>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="invest" element={<Invest />} />
+            <Route path="invest" element={<Invest/>} />
             <Route path="shopping" element={<Shopping />} />
           </Routes>
         </div>
