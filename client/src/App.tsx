@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import Sidebar from "./sidebar";
 
 const Home = () => (
   <div>
@@ -12,13 +13,19 @@ const About = () => (
   </div>
 );
 
+
+
 function App() {
   return (
-    <div>
+    <div style={{ display: "flex" }}>
+      <Sidebar />
+      <div style={{ flexGrow: 1, padding: "20px" }}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="about" element={<About />} />
+
       </Routes>
+    </div>
     </div>
   );
 }
