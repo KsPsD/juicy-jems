@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Sidebar from "./sidebar";
+import Invest from './invest';
 
 const Home = () => (
   <div>
@@ -23,6 +24,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="about" element={<About />} />
+        <Route path= "invest" element= {<Invest/>}/>
 
       </Routes>
     </div>
