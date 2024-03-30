@@ -7,6 +7,7 @@ import { ReactComponent as Progress100 } from "./assets/progress_bar_100.svg";
 import { ReactComponent as Progress91 } from "./assets/progress_bar_91_100.svg";
 import { ReactComponent as Progress71 } from "./assets/progress_bar_71_90.svg";
 import { ReactComponent as Progress50 } from "./assets/progress_bar_50_70.svg";
+import { ReactComponent as TwoArrows } from "./assets/two_arrows.svg";
 
 export interface InvestItem {
   id: number;
@@ -104,6 +105,56 @@ const ProgressBar = (props: { percentage: number }) => {
   } else {
     return <Progress50 style={style} />;
   }
+};
+
+const ExchangeItem = (props: { nftName: string; value: number }) => {
+  return (
+    <Box
+      sx={{
+        boxSizing: "border-box",
+        display: "flex",
+        flexDirection: "column",
+        gap: "4px",
+        width: "240px",
+        height: "120px",
+        padding: "17px",
+        justifyContent: "space-between",
+        alignItems: "center",
+
+        borderRadius: "14px",
+        border: "1px dashed #646464",
+        background: "#353535",
+      }}
+    >
+      <Box
+        sx={{
+          color: "#FFF",
+          fontFamily: "Poppins",
+          fontSize: "20px",
+          fontStyle: "normal",
+          fontWeight: 300,
+          lineHeight: "normal",
+        }}
+      >
+        {props.nftName}
+      </Box>
+      <Box
+        sx={{
+          color: "#FFF",
+          textAlign: "center",
+
+          fontFamily: "Azo Sans",
+          fontSize: "40px",
+          fontStyle: "normal",
+          fontWeight: 700,
+          lineHeight: "normal",
+          letterSpacing: "-0.28px",
+        }}
+      >
+        {props.value}
+      </Box>
+    </Box>
+  );
 };
 
 const Invest: React.FC = () => {
@@ -229,7 +280,7 @@ const Invest: React.FC = () => {
                       lineHeight: "normal",
                     }}
                   >
-                    Fund
+                    FUND
                   </Button>
                 </Box>
               </Paper>
@@ -240,19 +291,64 @@ const Invest: React.FC = () => {
       <Modal open={open} onClose={handleClose}>
         <Box
           sx={{
+            boxSizing: "border-box",
             position: "absolute",
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
             bgcolor: "background.paper",
-            boxShadow: 24,
-            p: 4,
+            width: "672px",
+            height: "314px",
+            padding: "46px 39px 52px 39px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            alignItems: "center",
+
+            borderRadius: "20px",
+            border: "1px solid var(--gray0, #FFF)",
+            background: "#333",
+            boxShadow: "0px 0px 60px 0px #333",
           }}
         >
-          <Typography variant="h6" gutterBottom>
-            {selectedItem?.title}
-          </Typography>
-          <Typography variant="body1">{selectedItem?.description}</Typography>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap: "12px",
+            }}
+          >
+            <ExchangeItem nftName={"NPT"} value={10} />
+            <TwoArrows />
+            <ExchangeItem nftName={"stNPT"} value={40} />
+          </Box>
+          <Button
+            sx={{
+              width: "272px",
+              height: "49px",
+              display: "inline-flex",
+              justifyContent: "center",
+              alignItems: "center",
+              borderRadius: "30px",
+              background: "#FBFF3D",
+              boxShadow: "0px 4.348px 8.696px 0px rgba(0, 0, 0, 0.25)",
+
+              color: "#333",
+              textAlign: "center",
+              fontFamily: "Poppins",
+              fontSize: "30px",
+              fontStyle: "normal",
+              fontWeight: 700,
+              lineHeight: "150%",
+
+              cursor: "pointer",
+            }}
+            onClick={handleClose}
+          >
+            FUND GAME
+          </Button>
         </Box>
       </Modal>
     </Box>

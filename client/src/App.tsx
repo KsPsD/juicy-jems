@@ -17,12 +17,12 @@ function App() {
     initWeb3();
   }, []);
 
-  const PRIVATE_KEY = '7085b5b3d28e4fe3b8879f9e3255740bcc4475e82735ed81448c731c5a9028ca';
+  const PRIVATE_KEY =
+    "7085b5b3d28e4fe3b8879f9e3255740bcc4475e82735ed81448c731c5a9028ca";
   const User = "0x40BEa87Bc6d629FFE827c46f3191553358742aB8";
-  const CA = "0xf55de014Cc9dD632dd00a65f482381C04e1E64d2"
+  const CA = "0xf55de014Cc9dD632dd00a65f482381C04e1E64d2";
 
   //web3,CA,User,PRIVATE_KEY,abi 는 상태 관리해주셔야 합니다!!
-
 
   const [totalSupply, setTotalSupply] = useState<number>(0);
   const initWeb3 = async () => {
@@ -32,20 +32,15 @@ function App() {
 
       const abi = abi_json;
 
-      const contract = new web3.eth.Contract(abi,CA);
+      const contract = new web3.eth.Contract(abi, CA);
       //nptoken 조회함수
-      console.log(contract)
-      const npttoken= await contract.methods.balanceOf(User).call()
-      console.log(npttoken)
-
-
-
+      console.log(contract);
+      const npttoken = await contract.methods.balanceOf(User).call();
+      console.log(npttoken);
     } catch (error) {
       console.error("Web3 초기화 오류:", error);
     }
-
   };
-
 
   //  //deposit tr
   // async function depositTransaction() {
