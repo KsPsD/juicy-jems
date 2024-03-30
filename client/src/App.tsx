@@ -2,15 +2,8 @@ import { Routes, Route } from "react-router-dom";
 import Sidebar from "./sidebar";
 import Invest from "./invest";
 import Shopping from "./Shopping";
-import WalletConnect, { WalletConnectProvider } from './walletConnect';
-
-const Home = () => (
-  <div>
-    <WalletConnect />
-    <h1>Home</h1>
-  </div>
-);
-
+import { WalletConnectProvider } from './walletConnect';
+import { Home } from './Home';
 
 
 function App() {
@@ -21,7 +14,6 @@ function App() {
       <div style={{ flexGrow: 1, padding: "20px" }}>
         <Routes>
           <Route path="/" element={<Home />} />
-
           <Route path="invest" element={<Invest />} />
           <Route path="shopping" element={<Shopping />} />
         </Routes>
