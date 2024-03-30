@@ -2,6 +2,7 @@
 import React, { useState ,useEffect } from "react";
 import { Grid, Paper, Typography, Modal, Box, LinearProgress ,Button } from "@mui/material";
 import  { LinearProgressProps } from '@mui/material/LinearProgress';
+import { useAccount  } from "wagmi";
 
 const Items = [
     { id: 1, title: "game 1", description: "Description of game 1", progress: 30, imageUrl: "https://picsum.photos/200/300?random=1" },
@@ -35,6 +36,14 @@ const Invest: React.FC = () => {
     description: string;
     progress: number;
   } | null>(null);
+
+  const { isConnected, address } = useAccount();
+
+  useEffect(() => {
+
+    console.log(isConnected, address);
+  }, [isConnected, address]);
+
 
   const [progress, setProgress] = useState(Items.map((item) => item.progress));
 
@@ -108,3 +117,4 @@ const Invest: React.FC = () => {
 };
 
 export default Invest;
+

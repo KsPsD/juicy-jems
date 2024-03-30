@@ -6,15 +6,12 @@ import WalletConnect, { WalletConnectProvider } from './walletConnect';
 
 const Home = () => (
   <div>
+    <WalletConnect />
     <h1>Home</h1>
   </div>
 );
 
-const About = () => (
-  <div>
-    <h1>About</h1>
-  </div>
-);
+
 
 function App() {
   return (
@@ -24,13 +21,12 @@ function App() {
       <div style={{ flexGrow: 1, padding: "20px" }}>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="about" element={<About />} />
+
           <Route path="invest" element={<Invest />} />
           <Route path="shopping" element={<Shopping />} />
         </Routes>
       </div>
     </div>
-    <WalletConnect />
   </WalletConnectProvider>
   );
 }

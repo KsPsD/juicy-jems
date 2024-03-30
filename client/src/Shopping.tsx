@@ -1,7 +1,9 @@
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import ShoppingModal from "./ShoppingModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAccount, useConnect, useDisconnect } from "wagmi";
+
 
 const ShoppingHeader = () => {
   return <div>header</div>;
@@ -103,6 +105,13 @@ const ItemList = (props: { openModal: () => void }) => {
 
 const Shopping = () => {
   const [modalOpened, setModalOpened] = useState(false);
+  const { isConnected, address } = useAccount();
+
+  useEffect(() => {
+
+    console.log(isConnected, address);
+  }, [isConnected, address,]);
+
   return (
     <div>
       <ShoppingHeader />
