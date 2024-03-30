@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Sidebar from "./sidebar";
-import Invest from './invest';
+import Invest from "./invest";
+import Shopping from "./Shopping";
 
 const Home = () => (
   <div>
@@ -14,20 +15,18 @@ const About = () => (
   </div>
 );
 
-
-
 function App() {
   return (
     <div style={{ display: "flex" }}>
       <Sidebar />
       <div style={{ flexGrow: 1, padding: "20px" }}>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="about" element={<About />} />
-        <Route path= "invest" element= {<Invest/>}/>
-
-      </Routes>
-    </div>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="about" element={<About />} />
+          <Route path="invest" element={<Invest />} />
+          <Route path="shopping" element={<Shopping />} />
+        </Routes>
+      </div>
     </div>
   );
 }

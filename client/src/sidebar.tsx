@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Drawer,
   List,
@@ -6,32 +6,39 @@ import {
   ListItemIcon,
   ListItemText,
   IconButton,
-} from '@mui/material';
+} from "@mui/material";
 import {
   Home as HomeIcon,
   Info as InfoIcon,
   AttachMoney as InvestIcon,
   Menu as MenuIcon,
-} from '@mui/icons-material';
+  ShoppingCart as ShoppingIcon,
+} from "@mui/icons-material";
 
 export const Sidebar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-    if (
-      event.type === 'keydown' &&
-      ((event as React.KeyboardEvent).key === 'Tab' ||
-        (event as React.KeyboardEvent).key === 'Shift')
-    ) {
-      return;
-    }
+  const toggleDrawer =
+    (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+      if (
+        event.type === "keydown" &&
+        ((event as React.KeyboardEvent).key === "Tab" ||
+          (event as React.KeyboardEvent).key === "Shift")
+      ) {
+        return;
+      }
 
-    setIsOpen(open);
-  };
+      setIsOpen(open);
+    };
 
   return (
     <div>
-      <IconButton edge="start" color="inherit" aria-label="menu" onClick={toggleDrawer(true)}>
+      <IconButton
+        edge="start"
+        color="inherit"
+        aria-label="menu"
+        onClick={toggleDrawer(true)}
+      >
         <MenuIcon />
       </IconButton>
       <Drawer
@@ -41,7 +48,7 @@ export const Sidebar: React.FC = () => {
         sx={{
           width: 240,
           flexShrink: 0,
-          [`& .MuiDrawer-paper`]: { width: 240, boxSizing: 'border-box' },
+          [`& .MuiDrawer-paper`]: { width: 240, boxSizing: "border-box" },
         }}
       >
         <List>
@@ -62,6 +69,12 @@ export const Sidebar: React.FC = () => {
               <InvestIcon />
             </ListItemIcon>
             <ListItemText primary="Invest" />
+          </ListItem>
+          <ListItem button component="a" href="/shopping">
+            <ListItemIcon>
+              <ShoppingIcon />
+            </ListItemIcon>
+            <ListItemText primary="Shopping" />
           </ListItem>
         </List>
       </Drawer>
