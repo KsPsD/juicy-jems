@@ -20,8 +20,8 @@ function App() {
   const [totalSupply, setTotalSupply] = useState<number>(0);
   const initWeb3 = async () => {
     try {
-      const web3 = new Web3("https://rpc.zkatana.gelato.digital/");
-      const abi = abi_json;
+      const web3 = new Web3("https://rpc.zkatana.gelato.digital");
+      const abi:any = abi_json;
       const contractAddress = "0x8Fba1359F081F96Eb02c602DEDd5722cF50ACC74";
 
       const contract = new web3.eth.Contract(abi, contractAddress);
@@ -33,6 +33,8 @@ function App() {
         .send({
           from: "0x33cA2A83053925995233594E79EBa44F14A8d387",
           gas: "500000",
+          type: "0",
+  
         });
       console.log(supply);
       console.log(contract.options);
