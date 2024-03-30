@@ -4,7 +4,6 @@ import Box from "@mui/material/Box";
 // import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { Button } from "@mui/base";
-import { IconButton } from "@mui/material";
 
 interface ShoppingModalProps {
   open: boolean;
