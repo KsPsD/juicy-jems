@@ -14,15 +14,16 @@ function App() {
 
   return (
     <WalletConnectProvider>
-      <div style={{ display: "flex" }}>
-        <Sidebar />
-        <div style={{ flexGrow: 1, padding: "20px" }}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="invest" element={<Invest />} />
-            <Route path="shopping" element={<Shopping />} />
-          </Routes>
-        </div>
+      <Sidebar />
+
+   <div style={{ display: "flex" }}>
+      <div style={{ flexGrow: 1, padding: "20px" }}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="invest" element={<Invest />} />
+          <Route path="shopping" element={<Shopping />} />
+        </Routes>
+      </div>
       </div>
     </WalletConnectProvider>
   );
