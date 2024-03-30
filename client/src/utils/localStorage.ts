@@ -65,7 +65,7 @@ export const initLocalStorage = () => {
       title: "game 2",
       description: "Description of game 2",
       imageUrl: "https://picsum.photos/200/300?random=2",
-      now: 200,
+      now: 400,
       goal: 600,
     },
     {
@@ -73,7 +73,7 @@ export const initLocalStorage = () => {
       title: "game 3",
       description: "Description of game 3",
       imageUrl: "https://picsum.photos/200/300?random=3",
-      now: 350,
+      now: 500,
       goal: 600,
     },
     {
@@ -81,7 +81,7 @@ export const initLocalStorage = () => {
       title: "game 4",
       description: "Description of game 4",
       imageUrl: "https://picsum.photos/200/300?random=4",
-      now: 500,
+      now: 550,
       goal: 600,
     },
     {
@@ -89,7 +89,15 @@ export const initLocalStorage = () => {
       title: "game 5",
       description: "Description of game 5",
       imageUrl: "https://picsum.photos/200/300?random=5",
-      now: 50,
+      now: 600,
+      goal: 600,
+    },
+    {
+      id: 6,
+      title: "game 6",
+      description: "Description of game 5",
+      imageUrl: "https://picsum.photos/200/300?random=5",
+      now: 350,
       goal: 600,
     },
   ];

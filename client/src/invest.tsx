@@ -1,17 +1,12 @@
 // Invest.tsx
 import React, { useState, useEffect } from "react";
-import {
-  Grid,
-  Paper,
-  Typography,
-  Modal,
-  Box,
-  LinearProgress,
-  Button,
-} from "@mui/material";
-import { LinearProgressProps } from "@mui/material/LinearProgress";
+import { Grid, Paper, Typography, Modal, Box, Button } from "@mui/material";
 import { useAccount } from "wagmi";
 import { getInvestItems } from "./utils/localStorage";
+import { ReactComponent as Progress100 } from "./assets/progress_bar_100.svg";
+import { ReactComponent as Progress91 } from "./assets/progress_bar_91_100.svg";
+import { ReactComponent as Progress71 } from "./assets/progress_bar_71_90.svg";
+import { ReactComponent as Progress50 } from "./assets/progress_bar_50_70.svg";
 
 export interface InvestItem {
   id: number;
@@ -94,22 +89,22 @@ const GameTab = (props: { selectedTab: GameTabType }) => {
   );
 };
 
-function LinearProgressWithLabel(
-  props: LinearProgressProps & { value: number }
-) {
-  return (
-    <Box sx={{ display: "flex", alignItems: "center" }}>
-      <Box sx={{ width: "100%", mr: 1 }}>
-        <LinearProgress variant="determinate" {...props} />
-      </Box>
-      <Box sx={{ minWidth: 35 }}>
-        <Typography variant="body2" color="text.secondary">{`${Math.round(
-          props.value
-        )}%`}</Typography>
-      </Box>
-    </Box>
-  );
-}
+const ProgressBar = (props: { percentage: number }) => {
+  const { percentage } = props;
+  const style = {
+    // width: "218px",
+    height: "18px",
+  };
+  if (percentage >= 100) {
+    return <Progress100 style={style} />;
+  } else if (percentage >= 91) {
+    return <Progress91 style={style} />;
+  } else if (percentage >= 71) {
+    return <Progress71 style={style} />;
+  } else {
+    return <Progress50 style={style} />;
+  }
+};
 
 const Invest: React.FC = () => {
   const [open, setOpen] = useState(false);
@@ -140,44 +135,107 @@ const Invest: React.FC = () => {
     >
       <GameTab selectedTab={GameTabType.MMORPG} />
       <Grid container spacing={2}>
-        {Items.map((item, index) => (
-          <Grid item xs={4} gap={"25px"} key={item.id}>
-            <Paper
-              elevation={3}
-              sx={{
-                padding: "16px",
-                cursor: "pointer",
-                display: "flex",
-                flexDirection: "column",
-                gap: "2em",
-                borderRadius: "16px",
-              }}
-            >
-              <img
-                src={item.imageUrl}
-                alt={item.title}
-                style={{ width: "50%", alignSelf: "center" }}
-              />
-              <Typography variant="h6" gutterBottom>
-                {item.title}
-              </Typography>
-              <Typography variant="body1">{item.description}</Typography>
-              <LinearProgressWithLabel value={(item.now / item.goal) * 100} />
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => handleOpen(item)}
+        {Items.map((item, index) => {
+          const percentage = (item.now / item.goal) * 100;
+          return (
+            <Grid item xs={4} gap={"25px"} key={item.id}>
+              <Paper
+                elevation={3}
                 sx={{
-                  marginLeft: "auto",
-                  padding: "4px 8px",
-                  fontSize: "0.8rem",
+                  width: "360px",
+                  padding: "22px",
+                  cursor: "pointer",
+                  display: "flex",
+                  flexDirection: "column",
+                  borderRadius: "16px",
+                  boxSizing: "border-box",
+                  backgroundColor: "#333",
                 }}
               >
-                Fund
-              </Button>
-            </Paper>
-          </Grid>
-        ))}
+                <img
+                  src={item.imageUrl}
+                  alt={item.title}
+                  style={{
+                    width: "100%",
+                    alignSelf: "center",
+                    height: "170px",
+                    borderRadius: "14px",
+                    marginBottom: "14px",
+                  }}
+                />
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    marginBottom: "8px",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      color: "white",
+                      fontFamily: "Poppins",
+                      fontSize: "20px",
+                      fontStyle: "normal",
+                      fontWeight: 500,
+                      lineHeight: "normal",
+                    }}
+                  >
+                    {item.title}
+                  </Box>
+                  <Box
+                    sx={{
+                      color: "white",
+                      textAlign: "right",
+                      fontFamily: "Poppins",
+                      fontSize: "20px",
+                      fontStyle: "normal",
+                      fontWeight: 300,
+                      lineHeight: "normal",
+                    }}
+                  >
+                    {`${Math.round(percentage)}%`}
+                  </Box>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    gap: "10px",
+                  }}
+                >
+                  <ProgressBar percentage={percentage} />
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => handleOpen(item)}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      width: "86px",
+                      height: "23px",
+                      borderRadius: "14px",
+                      backgroundColor: "#FBFF3D",
+                      boxShadow: "0px 2px 4px 0px rgba(0, 0, 0, 0.25)",
+
+                      color: "#333",
+                      textAlign: "center",
+                      fontFamily: "Poppins",
+                      fontSize: "14px",
+                      fontStyle: "normal",
+                      fontWeight: 700,
+                      lineHeight: "normal",
+                    }}
+                  >
+                    Fund
+                  </Button>
+                </Box>
+              </Paper>
+            </Grid>
+          );
+        })}
       </Grid>
       <Modal open={open} onClose={handleClose}>
         <Box
