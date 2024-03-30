@@ -1,8 +1,11 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import { Button } from "@mui/base";
-import { Grid,Divider, Typography } from "@mui/material";
+import { Button } from "@mui/material";
+import { Grid, Divider, Typography } from "@mui/material";
+import { ReactComponent as GameIcon } from "./assets/game.svg";
+import { ReactComponent as DrawListIcon } from "./assets/ic_draw_list.svg";
+import { ReactComponent as PriceIcon } from "./assets/ic_price.svg";
 
 interface ShoppingModalProps {
   open: boolean;
@@ -108,277 +111,349 @@ const ProbabilityDetail = (props: { onClose: () => void }) => {
   );
 };
 
-type NeopleGame =
-  | "game1"
-  | "game2"
-  | "game3"
-  | "game4"
-  | "game5"
-  | "game6"
-  | "game7"
-  | "game8";
+interface GameInfo {
+  id: number;
+  title: string;
+  itmes: {
+    name: string;
+    probability: number;
+  }[];
+  USDT: number;
+  stNPT: number;
+}
+
+const GameList = (props: {
+  selectedGame: GameInfo | undefined;
+  setSelectedGame: (gameInfo: GameInfo) => void;
+}) => {
+  const { selectedGame, setSelectedGame } = props;
+  const gameInfos: GameInfo[] = [
+    {
+      id: 0,
+      title: "Dungeon & Fighter",
+      itmes: [
+        { name: "+12 강화권", probability: 10 },
+        { name: "에픽 무기", probability: 20 },
+        { name: "레어 아바타", probability: 30 },
+      ],
+      USDT: 3,
+      stNPT: 5,
+    },
+    {
+      id: 1,
+      title: "Cyphers",
+      itmes: [
+        { name: "멋진 캐릭터 스킨", probability: 10 },
+        { name: "파워 건틀릿", probability: 20 },
+        { name: "귀금속", probability: 30 },
+      ],
+      USDT: 2,
+      stNPT: 4,
+    },
+    {
+      id: 3,
+      title: "DNF Duel",
+      itmes: [
+        { name: "슈퍼아머", probability: 10 },
+        { name: "슈퍼방장", probability: 20 },
+        { name: "레벨업", probability: 30 },
+      ],
+      USDT: 5,
+      stNPT: 10,
+    },
+  ];
+  return (
+    <Box sx={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+      {gameInfos.map((game, index) => {
+        const gameId = game.id;
+        return (
+          <Box
+            sx={{
+              display: "inline-flex",
+              padding: "12px 24px",
+              maxHeight: "30px",
+              justifyContent: "center",
+              alignItems: "center",
+              cursor: "pointer",
+              backgroundColor:
+                selectedGame?.id === gameId ? "#0C0D11" : "#333333CC",
+              color:
+                selectedGame?.id === gameId ? "#FBFF3D" : "var(--gray0, #FFF)",
+              fontFamily: "Poppins",
+              fontSize: "20px",
+              fontStyle: "normal",
+              fontWeight: "300",
+              lineHeight: "normal",
+              borderRadius: "10px",
+              border: "1px solid var(--gray6, #646464)",
+            }}
+            onClick={() => props.setSelectedGame(game)}
+          >
+            {game.title}
+          </Box>
+        );
+      })}
+    </Box>
+  );
+};
+
+type Currency = "USDT" | "stNPT";
 
 const ShoppingModalBody = (props: { onClose: () => void }) => {
-  const [selectedGameId, setSelectedGameId] = React.useState<
-    string|undefined
-  >(undefined);
-  const [selectedCurrencyId, setSelectedCurrencyId] = React.useState<
-    string|undefined
-  >(undefined);
+  const [selectedGame, setSelectedGame] = React.useState<GameInfo | undefined>(
+    undefined
+  );
+
+  const [selectedCurrency, setSelectedCurrency] =
+    React.useState<Currency>("stNPT");
   return (
-    <Box 
+    <Box
       sx={{
         position: "absolute",
-        width: "1010px",
-        height: selectedGameId ? "646px" : "265px",
+        width: "900px",
         top: "50%",
         left: "50%",
         display: "flex",
         flexDirection: "column",
-        gap: "32px",
         transform: "translate(-50%, -50%)",
         bgcolor: "background.paper",
         boxShadow: 24,
-        p: 4,
         borderRadius: "20px",
         border: "1px solid var(--gray0, #FFF)",
         background: "rgba(51, 51, 51, 0.80)",
         backdropFilter: "blur(30px)",
         flexShrink: "0",
-        justifyContent:"center",
+        justifyContent: "center",
+
+        padding: "35px 45px",
       }}
     >
-      <Divider sx={{background: "var(--gray6, #646464)"}}  />
-      <Box sx={{display:"inline-flex",alignSelf:"flex-start", gap:"22px"}}>
-      <svg  style={{width:"24px", height:"17px", alignSelf:"center"}} xmlns="http://www.w3.org/2000/svg" width="28" height="20" viewBox="0 0 28 20" fill="none">
-      <path d="M23 1H14H5L2 15.6552L6.2 18L10.4 13.8966H17.6L21.8 18L26 15.6552L23 1Z" stroke="white" stroke-width="2"/>
-        <line x1="7" y1="7" x2="13" y2="7" stroke="white" stroke-width="2"/>
-        <line x1="10" y1="4" x2="10" y2="10" stroke="white" stroke-width="2"/>
-        <circle cx="17" cy="8" r="1" fill="white"/>
-        <circle cx="20" cy="6" r="1" fill="white"/>
-        </svg>
-        <h2 style={{color: "var(--gray0, #FFF)",
-                  fontFamily: "Poppins",
-                  fontSize: "20px",
-                  fontStyle: "normal",
-                  fontWeight: "500",
-                  lineHeight: "normal"}}>Game List</h2>
-    </Box>
-      <Box sx={{display:"flex", gap:"10px", flexWrap:"wrap"  }}>
-        {[
-          "game1",
-          "game2",
-          "game3",
-          "game4",
-          "game5",
-          "game6",
-          "game7",
-          "game8",
-          "game1",
-          "game2",
-          "game4",
-          "game7",
-          "game1",
-          "game7",
-         
-        ].map((game,index) => {
-          const gameId = `${game}-${index}`;
-          return (
+      <Divider
+        sx={{ background: "var(--gray6, #646464)", marginBottom: "15px" }}
+      />
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          gap: "22px",
+          marginBottom: "32px",
+        }}
+      >
+        <GameIcon />
+        <h2
+          style={{
+            color: "var(--gray0, #FFF)",
+            fontFamily: "Poppins",
+            fontSize: "20px",
+            fontStyle: "normal",
+            fontWeight: "500",
+            lineHeight: "normal",
+          }}
+        >
+          Game List
+        </h2>
+      </Box>
+      <GameList selectedGame={selectedGame} setSelectedGame={setSelectedGame} />
+      {selectedGame && <ProbabilityDetail onClose={props.onClose} /> && (
+        <>
+          <Divider
+            sx={{
+              background: "var(--gray6, #646464)",
+              marginTop: "26px",
+              marginBottom: "21px",
+            }}
+          />
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-start",
+              gap: "12px",
+            }}
+          >
+            <Box sx={{ display: "flex", gap: "16px", flexDirection: "column" }}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: "14px" }}>
+                <DrawListIcon />
+                <h2
+                  style={{
+                    color: "var(--gray0, #FFF)",
+                    fontFamily: "Poppins",
+                    fontSize: "20px",
+                    fontStyle: "normal",
+                    fontWeight: "500",
+                    lineHeight: "normal",
+                  }}
+                >
+                  Draw List
+                </h2>
+              </Box>
               <Box
                 sx={{
-                  display: "inline-flex",
-                  padding: "12px 24px",
-                  maxHeight: "30px",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  cursor: "pointer",
-                  backgroundColor: selectedGameId === gameId ? "#0C0D11" : "#333333CC",
-                  color: selectedGameId === gameId? "#FBFF3D" :"var(--gray0, #FFF)",
-                  fontFamily: "Poppins",
-                  fontSize: "20px",
-                  fontStyle: "normal",
-                  fontWeight: "300",
-                  lineHeight: "normal",
-                  borderRadius: "10px",
-                  border: "1px solid var(--gray6, #646464)"
+                  width: "436px",
+                  height: "192px",
+                  backgroundColor: "#333333CC",
+                  alignContent: "center",
+                  gap: "10px",
+                  borderRadius: " 20px",
+                  border: "1px solid var(--gray6, #646464)",
+                  background: "var(--gray7, #353535)",
+                  alignSelf: "center",
                 }}
-                onClick={() => setSelectedGameId(gameId)}
               >
-                {game}
-              </Box>
-          );
-        })}
-      </Box>
-      {selectedGameId && <ProbabilityDetail onClose={props.onClose} /> 
-        && <>
-        <Divider sx={{background: "var(--gray6, #646464)"}} />
-      <Box  sx={{display:"flex",flexDirection:"row", justifyContent:"flex-start",gap:"12px"}}>
-        <Box sx={{display:"flex", gap:"16px", flexDirection:"column"}}>
-          <Box sx={{display: "inline-flex", gap:"14px"}}> 
-            <svg style={{width:"30px", height:"30px", alignSelf:"center"}} xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
-              <line x1="5" y1="7.5" x2="25" y2="7.5" stroke="white" stroke-width="2.5"/>
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M5 23.75L18.75 23.75L16.25 23.7499L18.75 21.25H5V23.75Z" fill="white"/>
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M5 16.25L25 16.25L22.5 16.2499L25 13.75H5V16.25Z" fill="white"/>
-            </svg>
-            <h2 style={{color: "var(--gray0, #FFF)",
-                  fontFamily: "Poppins",
-                  fontSize: "20px",
-                  fontStyle: "normal",
-                  fontWeight: "500",
-                  lineHeight: "normal"}}>Draw List</h2>
-          </Box>
-          <Box sx={{width:"436px", height:"192px",  backgroundColor:"#333333CC", alignContent:"center", gap:"10px",
-            borderRadius:" 20px",
-            border: "1px solid var(--gray6, #646464)",
-            background: "var(--gray7, #353535)",
-            alignSelf:"center",
-        }}>
-              {[
-            {name:"item1", "probability": "90%"},
-            {name:"item2", "probability": "80%"},
-            {name:"item3", "probability": "40%"},
-            {name:"item4", "probability": "10%"},
-
-            ].map((game,index) => {
-              const gameId = `${game}-${index}`;
-              return (
-                  <Box
-                    sx={{
-                      display: "inline-flex",
-                      padding: "12px 24px",
-                      maxHeight: "30px",
-                      width:"140px",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      cursor: "pointer",
-                      backgroundColor: selectedGameId === gameId ? "#0C0D11" : "#333333CC",
-                      color: selectedGameId === gameId? "#FBFF3D" :"var(--gray0, #FFF)",
-                      fontFamily: "Poppins",
-                      fontSize: "20px",
-                      fontStyle: "normal",
-                      fontWeight: "300",
-                      lineHeight: "normal",
-                      borderRadius: "10px",
-                      flexWrap:"wrap",
-                    }}
-                    onClick={() => setSelectedGameId(gameId)}
-                  >
-                    <Typography style={{ margin:"0 28px" }}>
-                      {game.name}
-                    </Typography>
-                    <Typography
+                {selectedGame.itmes.map((item, index) => {
+                  return (
+                    <Box
                       sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        minWidth: "100px",
+                        padding: "12px 24px",
+                        maxHeight: "30px",
+                        alignItems: "center",
+                        backgroundColor: "#333333CC",
+                        color: "#FFF",
                         fontFamily: "Poppins",
                         fontSize: "20px",
                         fontStyle: "normal",
                         fontWeight: "300",
                         lineHeight: "normal",
+                        borderRadius: "10px",
                       }}
-                      >
-                    {game.probability}
+                    >
+                      <Typography style={{ margin: "0 28px" }}>
+                        {item.name}
                       </Typography>
-                  </Box>
-              );
-            })}
-          </Box>
-         </Box>
-         <Divider sx={{background: "var(--gray6, #646464)"}}  orientation="vertical"/>
-         <Box sx={{display:"flex", gap:"16px", flexDirection:"column"}}>
-          <Box sx={{display: "inline-flex", gap:"14px", }}> 
-          <svg style={{width:"30px", height:"30px", alignSelf:"center"}} xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
-            <path d="M5 13.7502L15 16.25L25 13.75M5 13.7502L15 2.5M5 13.7502L15 11.2501M25 13.75L15 2.5M25 13.75L15 11.2501M15 2.5V11.2501M6.875 18.75L15.0002 27.5L23.125 18.75L15 20.625L6.875 18.75Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-            <h2 style={{color: "var(--gray0, #FFF)",
-                  fontFamily: "Poppins",
-                  fontSize: "20px",
-                  fontStyle: "normal",
-                  fontWeight: "500",
-                  lineHeight: "normal"}}>Price</h2>
-          </Box>
-          <Box sx={{display:"flex", flexDirection:"row", width:"436px", height:"192px", backgroundColor:"#333333CC",alignContent:"center",
-           borderRadius:" 20px",
-           border: "1px solid var(--gray6, #646464)",
-           background: "var(--gray7, #353535)",
-           justifyContent:"center",
-           gap:"23px",
-        }}>
-          {[
-         {name: "item1", currency:'USDT'},{name:"item2",currency:"stNPT"}
-        ].map((game,index) => {
-          console.log(game,index)
-          const gameId = `${game}-${index}`;
-          return (
-              <Box
-                sx={{
-                  width:"180px",
-                  height:"121px",
-                  display: "flex",
-                  flexDirection: "column",
-                  flexWrap:"wrap",
-                  justifyContent: "center",
-                  alignSelf:"center",
-                  alignItems: "center",
-                  cursor: "pointer",
-                  borderRadius: "14px",
-                  border: selectedCurrencyId===gameId ? "1px solid var(--gray0, #FFF)": "1px dashed var(--gray6, #646464)",
-                  background: "var(--gray7, #353535)",
-                  backgroundColor: selectedCurrencyId === gameId ? "#0C0D11" : "#333333CC",
-                  color: selectedCurrencyId === gameId? "#FBFF3D" :"var(--gray0, #FFF)",
-                }}
-                onClick={() => setSelectedCurrencyId(gameId)}
-              >
-                <Typography 
-                  sx={{
-                    fontFamily: "poppins",
+                      <Typography
+                        sx={{
+                          fontFamily: "Poppins",
+                          fontSize: "20px",
+                          fontStyle: "normal",
+                          fontWeight: "300",
+                          lineHeight: "normal",
+                        }}
+                      >
+                        {`${item.probability}%`}
+                      </Typography>
+                    </Box>
+                  );
+                })}
+              </Box>
+            </Box>
+            <Divider
+              sx={{ background: "var(--gray6, #646464)" }}
+              orientation="vertical"
+            />
+            <Box sx={{ display: "flex", gap: "16px", flexDirection: "column" }}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: "14px" }}>
+                <PriceIcon />
+                <h2
+                  style={{
+                    color: "var(--gray0, #FFF)",
+                    fontFamily: "Poppins",
                     fontSize: "20px",
                     fontStyle: "normal",
-                    fontWeight: "300",
+                    fontWeight: "500",
                     lineHeight: "normal",
                   }}
                 >
-                  {game.name}
-                </Typography>
-                <Typography
-                  sx={{
-                    fontFamily: "Azo Sans",
-                    fontSize: "40px",
-                    fontStyle: "normal",
-                    fontWeight: "700",
-                    lineHeight: "normal",
-                    letterSpacing: "-0.28px"
-                  }}
-                >
-                  {game.currency}
-                </Typography>
+                  Price
+                </h2>
               </Box>
-          );
-        })}
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  width: "436px",
+                  height: "192px",
+                  backgroundColor: "#333333CC",
+                  alignContent: "center",
+                  borderRadius: " 20px",
+                  border: "1px solid var(--gray6, #646464)",
+                  background: "var(--gray7, #353535)",
+                  justifyContent: "center",
+                  gap: "23px",
+                }}
+              >
+                {["USDT", "stNPT"].map((currency, index) => {
+                  const selected = selectedCurrency === currency;
+                  return (
+                    <Box
+                      sx={{
+                        width: "180px",
+                        height: "121px",
+                        display: "flex",
+                        flexDirection: "column",
+                        flexWrap: "wrap",
+                        justifyContent: "center",
+                        alignSelf: "center",
+                        alignItems: "center",
+                        cursor: "pointer",
+                        borderRadius: "14px",
+                        border: selected
+                          ? "1px solid var(--gray0, #FFF)"
+                          : "1px dashed var(--gray6, #646464)",
+                        background: "var(--gray7, #353535)",
+                        backgroundColor: selected ? "#0C0D11" : "#333333CC",
+                        color: selected ? "#FBFF3D" : "var(--gray0, #FFF)",
+                      }}
+                      onClick={() => setSelectedCurrency(currency as Currency)}
+                    >
+                      <Typography
+                        sx={{
+                          fontFamily: "poppins",
+                          fontSize: "20px",
+                          fontStyle: "normal",
+                          fontWeight: "300",
+                          lineHeight: "normal",
+                        }}
+                      >
+                        {currency}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontFamily: "Azo Sans",
+                          fontSize: "40px",
+                          fontStyle: "normal",
+                          fontWeight: "700",
+                          lineHeight: "normal",
+                          letterSpacing: "-0.28px",
+                        }}
+                      >
+                        {selectedGame[currency as Currency]}
+                      </Typography>
+                    </Box>
+                  );
+                })}
+              </Box>
+            </Box>
           </Box>
-         </Box>
-        </Box>
-        <Button 
-        style={{
-          alignSelf:"center",
-          width: "186px",
-          height: "50px",
-          flexShrink: 0,
-          borderRadius: "30.435px",
-          background:"var(--neo, #FBFF3D)",
-          boxShadow: "0px 4.348px 8.696px 0px rgba(0, 0, 0, 0.25)",
-          color: "var(--gray5, #333)",
-          textAlign: "center",
-          fontFamily: "Poppins",
-          fontSize: "30px",
-          fontStyle: "normal",
-          fontWeight: 700,
-          lineHeight: "normal"
+        </>
+      )}
+      {selectedGame && (
+        <Button
+          sx={{
+            marginTop: "40px",
+            alignSelf: "center",
+
+            width: "186px",
+            height: "50px",
+            borderRadius: "30px",
+            background: "#FBFF3D",
+            boxShadow: "0px 4.348px 8.696px 0px rgba(0, 0, 0, 0.25)",
+
+            color: "#333",
+            textAlign: "center",
+            fontFamily: "Poppins",
+            fontSize: "30px",
+            fontStyle: "normal",
+            fontWeight: 700,
+            lineHeight: "normal",
           }}
           onClick={props.onClose}
-          >
+        >
           BUY
         </Button>
-        </>
-      }
+      )}
     </Box>
   );
 };
@@ -393,7 +468,7 @@ export default function ShoppingModal(props: ShoppingModalProps) {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <ShoppingModalBody  onClose={onClose} />
+      <ShoppingModalBody onClose={onClose} />
     </Modal>
   );
 }
