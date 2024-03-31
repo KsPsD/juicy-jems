@@ -10,17 +10,17 @@ import { abi_json } from "./consts";
 import Web3 from "web3";
 
 import Header from "./Header";
-import DepositWithdrawService from './DepositWithdrawService';
 
-const service = new DepositWithdrawService();
 
 function App() {
-  const  [balance, setBalance] = useState<number>(0);
+  const  [curBalance, setBalance] = useState<number>(0);
 
   useEffect(() => {
     initLocalStorage();
+  }, []);
+  useEffect(() => {
     initWeb3();
-  }, [balance]);
+  },[curBalance])
 
   const PRIVATE_KEY =
     "7085b5b3d28e4fe3b8879f9e3255740bcc4475e82735ed81448c731c5a9028ca";
@@ -37,77 +37,23 @@ function App() {
       const abi = abi_json;
 
       const contract = new web3.eth.Contract(abi, CA);
-      //nptoken 조회함수
-      console.log(contract);
-      const npttoken = await contract.methods.balanceOf(User).call();
-      console.log(npttoken);
+      contract.methods.balanceOf(User).call().then((npttoken) => {
+        console.log(npttoken);
+        const userBalance = Number(npttoken) 
+        setBalance(userBalance);
+        console.log(userBalance);
+      }).catch((error) => {
+
+        console.error("Web3 초기화 오류:", error);
+      })
+     
+
     } catch (error) {
       console.error("Web3 초기화 오류:", error);
     }
   };
 
-  //  //deposit tr
-  //  async function depositTransaction() {
-
-  //   const encodedData = '0x' + web3.eth.abi.encodeFunctionCall({
-  //     "inputs": [
-  //       {
-  //         "internalType": "uint256",
-  //         "name": "amount",
-  //         "type": "uint256"
-  //       }
-  //     ],
-  //     "name": "deposit",
-  //     "outputs": [],
-  //     "stateMutability": "nonpayable",
-  //     "type": "function"
-  //   }, [100]).slice(2);
-
-  //   // 트랜잭션 객체 생성
-  //   const txObject = {
-  //     nonce: web3.utils.toHex(await web3.eth.getTransactionCount(User)),
-  //     gasLimit: web3.utils.toHex(500000), // 충분한 가스 한도 설정
-  //     gasPrice: web3.utils.toHex(10e9), // 가스 가격 (10 Gwei)
-  //     to: CA, // 대상 스마트 계약 주소
-  //     value: '0x00', // 이더 전송 없음
-  //     data: encodedData
-  //   };
-
-  //   const signedTx = await web3.eth.accounts.signTransaction(txObject, PRIVATE_KEY);
-
-  //   web3.eth.sendSignedTransaction(signedTx.rawTransaction)
-  // }
-
-  // //withdraw tr
-  // async function withdrawTransaction() {
-
-  //   const encodedData = '0x' + web3.eth.abi.encodeFunctionCall({
-  //     "inputs": [
-  //       {
-  //         "internalType": "uint256",
-  //         "name": "amount",
-  //         "type": "uint256"
-  //       }
-  //     ],
-  //     "name": "withdraw",
-  //     "outputs": [],
-  //     "stateMutability": "nonpayable",
-  //     "type": "function"}, [10]).slice(2);
-
-  //   // 트랜잭션 객체 생성
-  //   const txObject = {
-  //     nonce: web3.utils.toHex(await web3.eth.getTransactionCount(User)),
-  //     gasLimit: web3.utils.toHex(500000), // 충분한 가스 한도 설정
-  //     gasPrice: web3.utils.toHex(10e9), // 가스 가격 (10 Gwei)
-  //     to: CA, // 대상 스마트 계약 주소
-  //     value: '0x00', // 이더 전송 없음
-  //     data: encodedData
-  //   };
-
-  //   const signedTx = await web3.eth.accounts.signTransaction(txObject, PRIVATE_KEY);
-
-  //   web3.eth.sendSignedTransaction(signedTx.rawTransaction)
-  // }
+ 
 
   return (
     <WalletConnectProvider>
@@ -117,7 +63,7 @@ function App() {
         <div style={{ flexGrow: 1 }}>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="invest" element={<Invest/>} />
+            <Route path="invest" element={<Invest userBalance={curBalance} setBalance={setBalance}/>} />
             <Route path="shopping" element={<Shopping />} />
           </Routes>
         </div>

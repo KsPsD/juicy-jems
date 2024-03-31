@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Paper, Typography, Modal, Box, Button } from "@mui/material";
 import { useAccount } from "wagmi";
-import { getInvestItems } from "./utils/localStorage";
+import { getInvestItems ,localStorageUtil} from "./utils/localStorage";
 import { ReactComponent as Progress100 } from "./assets/progress_bar_100.svg";
 import { ReactComponent as Progress91 } from "./assets/progress_bar_91_100.svg";
 import { ReactComponent as Progress71 } from "./assets/progress_bar_71_90.svg";
@@ -20,6 +20,7 @@ export interface InvestItem {
 
 }
 interface InvestProps {
+  userBalance: number;
   setBalance: (balance: number) => void;
 }
 
@@ -164,7 +165,7 @@ const ExchangeItem = (props: { nftName: string; value: number }) => {
   );
 };
 
-const Invest: React.FC = () => {
+const Invest: React.FC<InvestProps> = ({userBalance,setBalance}) => {
   const [open, setOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<InvestItem | null>(null);
 
@@ -173,11 +174,6 @@ const Invest: React.FC = () => {
 
   useEffect(() => {
     console.log(isConnected, address);
-    service.withdrawTransaction(100).then((result) => {
-      console.log(result);
-    }).catch((error) => {
-      console.error('Error:', error);
-    });
 
   }, [isConnected, address]);
 
@@ -187,7 +183,21 @@ const Invest: React.FC = () => {
   };
 
   const handleClose = () => {
-    setOpen(false);
+    service.depositTransaction(4).then((result) => {
+      setBalance(userBalance + 40);
+     let prevItem = JSON.parse(localStorageUtil.get('investItems'))[1]
+      console.log(prevItem)
+      localStorageUtil.editInvestItems({ id: 2,
+        title: 'game 1',
+        description: 'Description of game 1',
+        imageUrl: 'https://picsum.photos/200/300?random=1',
+        now: userBalance + 40,
+        goal: 600})
+      setOpen(false);
+
+    }).catch((error) => {
+      console.error('Error:', error);
+    });
   };
 
   return (
@@ -203,7 +213,7 @@ const Invest: React.FC = () => {
           const percentage = (item.now / item.goal) * 100;
           return (
             <Grid item xs={4} gap={"25px"} key={item.id}>
-              <Paper
+              <Paper 
                 elevation={3}
                 sx={{
                   width: "360px",
