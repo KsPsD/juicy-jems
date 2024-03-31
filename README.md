@@ -3,7 +3,7 @@
 This repository contains the source code and documentation for our project submission to the ETH Seoul 2024 Hackathon.
 
 ## Project Overview
-![KakaoTalk_Photo_2024-03-31-11-43-46|150x150](https://github.com/KsPsD/juicy-jems/assets/63996129/29e74b8a-61af-4672-b43f-4f9abaef48bd)
+![KakaoTalk_Photo_2024-03-31-11-43-46|50x50](https://github.com/KsPsD/juicy-jems/assets/63996129/29e74b8a-61af-4672-b43f-4f9abaef48bd)
 
 ![KakaoTalk_Photo_2024-03-31-11-43-57](https://github.com/KsPsD/juicy-jems/assets/63996129/80626841-cf8b-470e-b2a8-19137596026f)
 
