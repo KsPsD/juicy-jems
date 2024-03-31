@@ -1,19 +1,20 @@
-import { InvestItem } from "../invest";
+import { InvestItem } from '../invest';
 
 interface LocalStorageUtil {
   save: (key: string, value: string) => void;
   edit: (key: string, newValue: string) => void;
   remove: (key: string) => void;
-  get: (key: string) => string | null;
+  get: (key: string) => any;
+  editInvestItems: (newValue: InvestItem) => void;
 }
 
 export const localStorageUtil: LocalStorageUtil = {
-  // Saves a value to localStorage.
   save(key: string, value: string): void {
     try {
       localStorage.setItem(key, value);
+      console.log(key, value);
     } catch (e) {
-      console.error("Error saving to localStorage:", JSON.stringify(e));
+      console.error('Error saving to localStorage:', JSON.stringify(e));
     }
   },
 
@@ -23,7 +24,27 @@ export const localStorageUtil: LocalStorageUtil = {
     try {
       localStorage.setItem(key, newValue);
     } catch (e) {
-      console.error("Error editing localStorage:", JSON.stringify(e));
+      console.error('Error editing localStorage:', JSON.stringify(e));
+    }
+  },
+
+  editInvestItems(newValue: InvestItem): void {
+    try {
+      const items = localStorageUtil.get(INVEST_ITEMS_KEY);
+      if (items) {
+        const investItems = JSON.parse(items);
+        const newItems = investItems.map((item: InvestItem) => {
+          if (item.id === newValue.id) {
+            return { ...item, now: newValue.now };
+          }
+          return item;
+        });
+        console.log(newItems);
+        console.log(INVEST_ITEMS_KEY);
+        localStorageUtil.save(INVEST_ITEMS_KEY, JSON.stringify(newItems));
+      }
+    } catch (e) {
+      console.error('Error editing localStorage:', JSON.stringify(e));
     }
   },
 
@@ -32,71 +53,71 @@ export const localStorageUtil: LocalStorageUtil = {
     try {
       localStorage.removeItem(key);
     } catch (e) {
-      console.error("Error removing from localStorage:", JSON.stringify(e));
+      console.error('Error removing from localStorage:', JSON.stringify(e));
     }
   },
 
   // Retrieves an item from localStorage. Returns null if the key does not exist.
-  get(key: string): string | null {
+  get(key: string): any {
     try {
       return localStorage.getItem(key);
     } catch (e) {
-      console.error("Error getting from localStorage:", JSON.stringify(e));
+      console.error('Error getting from localStorage:', JSON.stringify(e));
       return null;
     }
   },
 };
 
-export const INVEST_ITEMS_KEY = "investItems";
-export const USER_TOTAL_INVESTMENT_KEY = "userTotalInvestment";
+export const INVEST_ITEMS_KEY = 'investItems';
+export const USER_TOTAL_INVESTMENT_KEY = 'userTotalInvestment';
 
 export const initLocalStorage = () => {
   const investItems: InvestItem[] = [
     {
       id: 1,
-      title: "game 1",
-      description: "Description of game 1",
-      imageUrl: "https://picsum.photos/200/300?random=1",
+      title: 'game 1',
+      description: 'Description of game 1',
+      imageUrl: 'https://picsum.photos/200/300?random=1',
       now: 300,
       goal: 600,
     },
     {
       id: 2,
-      title: "game 2",
-      description: "Description of game 2",
-      imageUrl: "https://picsum.photos/200/300?random=2",
+      title: 'game 2',
+      description: 'Description of game 2',
+      imageUrl: 'https://picsum.photos/200/300?random=2',
       now: 400,
       goal: 600,
     },
     {
       id: 3,
-      title: "game 3",
-      description: "Description of game 3",
-      imageUrl: "https://picsum.photos/200/300?random=3",
+      title: 'game 3',
+      description: 'Description of game 3',
+      imageUrl: 'https://picsum.photos/200/300?random=3',
       now: 500,
       goal: 600,
     },
     {
       id: 4,
-      title: "game 4",
-      description: "Description of game 4",
-      imageUrl: "https://picsum.photos/200/300?random=4",
+      title: 'game 4',
+      description: 'Description of game 4',
+      imageUrl: 'https://picsum.photos/200/300?random=4',
       now: 550,
       goal: 600,
     },
     {
       id: 5,
-      title: "game 5",
-      description: "Description of game 5",
-      imageUrl: "https://picsum.photos/200/300?random=5",
+      title: 'game 5',
+      description: 'Description of game 5',
+      imageUrl: 'https://picsum.photos/200/300?random=5',
       now: 600,
       goal: 600,
     },
     {
       id: 6,
-      title: "game 6",
-      description: "Description of game 5",
-      imageUrl: "https://picsum.photos/200/300?random=5",
+      title: 'game 6',
+      description: 'Description of game 5',
+      imageUrl: 'https://picsum.photos/200/300?random=5',
       now: 350,
       goal: 600,
     },
