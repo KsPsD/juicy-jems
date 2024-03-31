@@ -129,23 +129,6 @@ function withdraw(uint256 amount) public {
         return _userInfo[account].tier;
     }
 
-    function updateTier(address account) private {
-        uint256 balance = _userInfo[account].balance;
-        string memory _tier;
-
-        if (balance >= 1000) {
-            _tier = "platinum";
-        } else if (balance >= 500) {
-            _tier = "gold";
-        } else if (balance >= 100) {
-            _tier = "silver";
-        } else {
-            _tier = "regular";
-        }
-
-        // Update tier in UserInfo struct
-        _userInfo[account].tier = _tier;
-    }
 
 
 }
