@@ -47,6 +47,12 @@ yarn start
 
 ## Smart Contracts
 
+There are two smart contracts in the smartcontracts folder. One smart contract enables investment and swapping functionalities for the game, while the other provides an opportunity for game investors to draw random special items.
+
+In the first smart contract, ERC20 is used to create a token called stNPT, which corresponds to NPT tokens at a 1:1 ratio. Investors can receive stNPT tokens corresponding to the number of NPT tokens they invest.
+
+In the second smart contract, ERC1155 is used to issue a fixed quantity of game items. Game users who invest a certain amount are eligible to draw items based on probabilities implemented in the smart contract. Upon drawing an item, they receive the NFT of that item.
+
 ## Frontend
 
 The Client has three main pages; main page(/), investment page(/invest), and random box page(/shopping). And you can also navigate the pages with nav bar(header).
