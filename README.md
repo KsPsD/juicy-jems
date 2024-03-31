@@ -3,6 +3,18 @@
 This repository contains the source code and documentation for our project submission to the ETH Seoul 2024 Hackathon.
 
 ## Project Overview
+![KakaoTalk_Photo_2024-03-31-11-43-46](https://github.com/KsPsD/juicy-jems/assets/63996129/29e74b8a-61af-4672-b43f-4f9abaef48bd)
+
+![KakaoTalk_Photo_2024-03-31-11-43-57](https://github.com/KsPsD/juicy-jems/assets/63996129/80626841-cf8b-470e-b2a8-19137596026f)
+
+![KakaoTalk_Photo_2024-03-31-11-44-53](https://github.com/KsPsD/juicy-jems/assets/63996129/aadd2327-286b-4980-8032-863dca8cfbd0)
+
+![KakaoTalk_Photo_2024-03-31-11-45-06](https://github.com/KsPsD/juicy-jems/assets/63996129/212da4a8-2b76-47a7-b373-9aa7b310bea7)
+
+![KakaoTalk_Photo_2024-03-31-11-45-16](https://github.com/KsPsD/juicy-jems/assets/63996129/f3ea1ccc-7129-44a5-93a3-68a5925cd11f)
+
+![KakaoTalk_Photo_2024-03-31-11-45-23](https://github.com/KsPsD/juicy-jems/assets/63996129/ce3d168e-d9d8-4837-ac46-7bfa271d786c)
+
 
 ## Technologies Used
 
@@ -12,8 +24,6 @@ This repository contains the source code and documentation for our project submi
 - Figma
 
 ## Getting Started
-
-...
 
 ### Prerequisites
 
