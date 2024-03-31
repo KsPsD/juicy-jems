@@ -4,12 +4,16 @@ import ShoppingModal from "./ShoppingModal";
 import { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 import { ReactComponent as RandomBox } from "./assets/random_box.svg";
+import DepositWithdrawService, { RANDOM_ADDR } from './DepositWithdrawService';
+import { random_json } from './randomabi';
 
 interface ItemProps {
   name: string;
   src: string;
   openModal: () => void;
 }
+
+const randomTrService = new DepositWithdrawService(random_json,RANDOM_ADDR);
 
 const Item = (props: ItemProps) => {
   const { name, openModal } = props;
@@ -72,6 +76,17 @@ const Shopping = () => {
     console.log(isConnected, address);
   }, [isConnected, address]);
 
+  function closeModal() {
+    setModalOpened(false);
+    randomTrService.randomItemTransaction().then((res) => {
+      console.log("res",res);
+    }).catch((err) => {
+      console.log("err",err);
+    });
+
+
+  }
+
   return (
     <div>
       <Box
@@ -90,7 +105,7 @@ const Shopping = () => {
           onClick={() => setModalOpened(true)}
         />
       </Box>
-      <ShoppingModal open={modalOpened} onClose={() => setModalOpened(false)} />
+      <ShoppingModal open={modalOpened} onClose={() => closeModal()} />
     </div>
   );
 };
