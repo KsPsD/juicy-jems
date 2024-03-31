@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createWeb3Modal, useWeb3Modal } from "@web3modal/wagmi/react";
 import { defaultWagmiConfig } from "@web3modal/wagmi/react/config";
-import { WagmiProvider } from "wagmi";
+import { WagmiProvider, useAccount } from "wagmi";
 import { astar, mainnet } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactComponent as HomeImage } from "./assets/home.svg";
+import { useNavigate } from "react-router-dom";
 
 const queryClient = new QueryClient();
 
@@ -44,15 +45,24 @@ export const WalletConnectProvider: React.FC<{ children: React.ReactNode }> = ({
 
 const WalletConnect: React.FC = () => {
   const { open } = useWeb3Modal();
+  const navigate = useNavigate();
+  const { isConnected } = useAccount();
+
+  useEffect(() => {
+    if (isConnected) {
+      navigate("/invest");
+    }
+  }, [isConnected]);
 
   return (
     <HomeImage
       style={{
+        maxHeight: "calc(100vh - 80px)",
         width: "100%",
         cursor: "pointer",
       }}
-      onClick={() => {
-        open();
+      onClick={async () => {
+        await open();
       }}
     />
   );

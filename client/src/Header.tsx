@@ -104,6 +104,8 @@ const Header = () => {
         width: "100%",
         height: "80px",
         backgroundColor: "#0F0F12;",
+
+        zIndex: 1,
       }}
     >
       <Logo

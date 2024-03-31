@@ -1,4 +1,4 @@
-import { InvestItem } from '../invest';
+import { InvestItem } from "../invest";
 
 interface LocalStorageUtil {
   save: (key: string, value: string) => void;
@@ -14,7 +14,7 @@ export const localStorageUtil: LocalStorageUtil = {
       localStorage.setItem(key, value);
       console.log(key, value);
     } catch (e) {
-      console.error('Error saving to localStorage:', JSON.stringify(e));
+      console.error("Error saving to localStorage:", JSON.stringify(e));
     }
   },
 
@@ -24,7 +24,7 @@ export const localStorageUtil: LocalStorageUtil = {
     try {
       localStorage.setItem(key, newValue);
     } catch (e) {
-      console.error('Error editing localStorage:', JSON.stringify(e));
+      console.error("Error editing localStorage:", JSON.stringify(e));
     }
   },
 
@@ -44,7 +44,7 @@ export const localStorageUtil: LocalStorageUtil = {
         localStorageUtil.save(INVEST_ITEMS_KEY, JSON.stringify(newItems));
       }
     } catch (e) {
-      console.error('Error editing localStorage:', JSON.stringify(e));
+      console.error("Error editing localStorage:", JSON.stringify(e));
     }
   },
 
@@ -53,7 +53,7 @@ export const localStorageUtil: LocalStorageUtil = {
     try {
       localStorage.removeItem(key);
     } catch (e) {
-      console.error('Error removing from localStorage:', JSON.stringify(e));
+      console.error("Error removing from localStorage:", JSON.stringify(e));
     }
   },
 
@@ -62,62 +62,62 @@ export const localStorageUtil: LocalStorageUtil = {
     try {
       return localStorage.getItem(key);
     } catch (e) {
-      console.error('Error getting from localStorage:', JSON.stringify(e));
+      console.error("Error getting from localStorage:", JSON.stringify(e));
       return null;
     }
   },
 };
 
-export const INVEST_ITEMS_KEY = 'investItems';
-export const USER_TOTAL_INVESTMENT_KEY = 'userTotalInvestment';
+export const INVEST_ITEMS_KEY = "investItems";
+export const USER_TOTAL_INVESTMENT_KEY = "userTotalInvestment";
 
 export const initLocalStorage = () => {
   const investItems: InvestItem[] = [
     {
       id: 1,
-      title: 'War Craft',
-      description: 'Description of game 1',
-      imageUrl: '/world.png',
+      title: "War Craft",
+      description: "Description of game 1",
+      imageUrl: "/world.png",
       now: 300,
       goal: 600,
     },
     {
       id: 2,
-      title: 'RealBro',
-      description: 'Description of game 2',
-      imageUrl: '/warrior.png',
+      title: "The Greatest Warrior",
+      description: "Description of game 2",
+      imageUrl: "/warrior.png",
       now: 400,
       goal: 600,
     },
     {
       id: 3,
-      title: 'Magician',
-      description: 'Description of game 3',
-      imageUrl: '/magician.png',
+      title: "Magician",
+      description: "Description of game 3",
+      imageUrl: "/magician.png",
       now: 500,
       goal: 600,
     },
     {
       id: 4,
-      title: 'Dragon razor',
-      description: 'Description of game 4',
-      imageUrl: 'dragon.png',
+      title: "Dragon razor",
+      description: "Description of game 4",
+      imageUrl: "dragon.png",
       now: 550,
       goal: 600,
     },
     {
       id: 5,
-      title: 'Sold Out',
-      description: 'Description of game 5',
-      imageUrl: 'https://picsum.photos/200/300?random=5',
+      title: "Sold Out",
+      description: "Description of game 5",
+      imageUrl: "https://picsum.photos/200/300?random=5",
       now: 600,
       goal: 600,
     },
     {
       id: 6,
-      title: 'NEOPIN',
-      description: 'Description of game 5',
-      imageUrl: 'castle.png',
+      title: "NEOPIN",
+      description: "Description of game 5",
+      imageUrl: "castle.png",
       now: 350,
       goal: 600,
     },
