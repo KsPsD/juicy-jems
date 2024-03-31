@@ -8,7 +8,8 @@ import { ReactComponent as Progress91 } from "./assets/progress_bar_91_100.svg";
 import { ReactComponent as Progress71 } from "./assets/progress_bar_71_90.svg";
 import { ReactComponent as Progress50 } from "./assets/progress_bar_50_70.svg";
 import { ReactComponent as TwoArrows } from "./assets/two_arrows.svg";
-import DepositWithdrawService from './DepositWithdrawService';
+import DepositWithdrawService ,{NPT_ADDR } from './DepositWithdrawService';
+import { abi_json } from './consts';
 
 export interface InvestItem {
   id: number;
@@ -30,7 +31,8 @@ enum GameTabType {
   FPS = "FPS",
 }
 
-const service = new DepositWithdrawService();
+const ntpService = new DepositWithdrawService(abi_json,NPT_ADDR);
+
 
 const GameTab = (props: { selectedTab: GameTabType }) => {
   const { selectedTab } = props;
@@ -183,21 +185,31 @@ const Invest: React.FC<InvestProps> = ({userBalance,setBalance}) => {
   };
 
   const handleClose = () => {
-    service.depositTransaction(4).then((result) => {
-      setBalance(userBalance + 40);
-     let prevItem = JSON.parse(localStorageUtil.get('investItems'))[1]
-      console.log(prevItem)
-      localStorageUtil.editInvestItems({ id: 2,
-        title: 'game 1',
-        description: 'Description of game 1',
-        imageUrl: 'https://picsum.photos/200/300?random=1',
-        now: userBalance + 40,
-        goal: 600})
-      setOpen(false);
+    const withdrawNTPAmount = 100; 
 
-    }).catch((error) => {
-      console.error('Error:', error);
-    });
+    ntpService.depositTransaction(withdrawNTPAmount)
+        .then((result) => {
+          console.log('deposit transaction result:', result);
+            setBalance(userBalance + withdrawNTPAmount);
+            let prevItem = JSON.parse(localStorageUtil.get('investItems'))[1];
+            console.log(prevItem);
+            localStorageUtil.editInvestItems({
+                id: 2,
+                title: 'game 1',
+                description: 'Description of game 1',
+                imageUrl: "/warrior.png",
+                now: userBalance + withdrawNTPAmount,
+                goal: 600
+            });
+            return ntpService.withdrawTransaction(withdrawNTPAmount*2);
+        })
+        .then((depositResult) => {
+            console.log('Withdraw transaction result:', depositResult);
+            setOpen(false);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
   };
 
   return (

@@ -1,24 +1,23 @@
 import Web3 from 'web3';
 import { abi_json } from './consts';
+import { stnpt_json } from './stnptabi';
+import { random_json } from './randomabi';
 
 const PRIVATE_KEY =
   '7085b5b3d28e4fe3b8879f9e3255740bcc4475e82735ed81448c731c5a9028ca';
-const User = '0x40BEa87Bc6d629FFE827c46f3191553358742aB8';
-const CA = '0xf55de014Cc9dD632dd00a65f482381C04e1E64d2';
+export const User = '0x40BEa87Bc6d629FFE827c46f3191553358742aB8';
+export const NPT_ADDR = '0xf55de014Cc9dD632dd00a65f482381C04e1E64d2';
+// export const STNPT_TOKEN_ADDR = '0xAa13a89Fc1529e9b22D2eae6A892c172b7B4D13e';
+export const RANDOM_ADDR = '0x944742D2d70D9820C9C79E01fe3cE63D114a4f2a';
+export const rpcUrl = 'https://rpc.public.zkevm-test.net';
 
 class DepositWithdrawService {
-  constructor(
-    rpcUrl = 'https://rpc.public.zkevm-test.net',
-    abi = abi_json,
-    contractAddress = CA,
-    privateKey = PRIVATE_KEY,
-    user = User
-  ) {
-    this.web3 = new Web3(rpcUrl);
+  constructor(abi, contractAddress) {
+    this.web3 = new Web3('https://rpc.public.zkevm-test.net');
     this.abi = abi;
     this.contractAddress = contractAddress;
-    this.privateKey = privateKey;
-    this.contract = new this.web3.eth.Contract(this.abi, this.contractAddress);
+    this.privateKey = PRIVATE_KEY;
+    this.contract = new this.web3.eth.Contract(abi, contractAddress);
     this.User = User;
   }
 

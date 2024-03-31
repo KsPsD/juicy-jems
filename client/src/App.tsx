@@ -19,7 +19,9 @@ function App() {
 
   useEffect(() => {
     initLocalStorage();
+    initWeb3();
   }, []);
+  
   useEffect(() => {
     initWeb3();
   },[curBalance])
@@ -31,7 +33,6 @@ function App() {
   const stnpTokenAddr="0xAa13a89Fc1529e9b22D2eae6A892c172b7B4D13e";
   const randomAddr="0x944742D2d70D9820C9C79E01fe3cE63D114a4f2a";
 
-  //web3,CA,User,PRIVATE_KEY,abi 는 상태 관리해주셔야 합니다!!
 
 
   const [totalSupply, setTotalSupply] = useState<number>(0);
@@ -51,25 +52,21 @@ function App() {
       }).catch((error) => {
       const contract = new web3.eth.Contract(abi,CA);
 
-    
-      
-
-
         console.error("Web3 초기화 오류:", error);
       })
       console.log(contract)
       const npttoken= await contract.methods.balanceOf(User).call()
-      console.log(npttoken)
+      console.log("ntp balance",npttoken)
 
       const stnpt=stnpt_json;
       const contract2 = new web3.eth.Contract(stnpt,stnpTokenAddr);
       const stnpttoken= await contract2.methods.balanceOf(User).call();
-      console.log(stnpttoken)
+      console.log("stnpt balance", stnpttoken)
 
       const random=random_json;
       const contract3= new web3.eth.Contract(random,randomAddr);
       const ownTokenNum= await contract3.methods.balanceOf(User,1).call()
-      console.log(ownTokenNum)
+      console.log("random balance",ownTokenNum)
 
     } catch (error) {
       console.error("Web3 초기화 오류:", error);
