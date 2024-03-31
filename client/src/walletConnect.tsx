@@ -2,8 +2,9 @@ import React from "react";
 import { createWeb3Modal, useWeb3Modal } from "@web3modal/wagmi/react";
 import { defaultWagmiConfig } from "@web3modal/wagmi/react/config";
 import { WagmiProvider } from "wagmi";
-import { arbitrum, astar, mainnet } from "wagmi/chains";
+import { astar, mainnet } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactComponent as HomeImage } from "./assets/home.svg";
 
 const queryClient = new QueryClient();
 
@@ -45,14 +46,15 @@ const WalletConnect: React.FC = () => {
   const { open } = useWeb3Modal();
 
   return (
-    <div>
-      <>
-        <button onClick={() => open()}>Open Connect Modal</button>
-        <button onClick={() => open({ view: "Networks" })}>
-          Open Network Modal
-        </button>
-      </>
-    </div>
+    <HomeImage
+      style={{
+        width: "100%",
+        cursor: "pointer",
+      }}
+      onClick={() => {
+        open();
+      }}
+    />
   );
 };
 
