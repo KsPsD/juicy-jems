@@ -213,6 +213,7 @@ const Invest: React.FC<InvestProps> = ({userBalance,setBalance}) => {
           const percentage = (item.now / item.goal) * 100;
           return (
             <Grid item xs={4} gap={"25px"} key={item.id}>
+              {item.now>= item.goal && <img  src='/sold_out.svg' style={{position:"relative" , zIndex:2 ,top:"40%", left:"12%"}}></img>}
               <Paper 
                 elevation={3}
                 sx={{
@@ -224,6 +225,7 @@ const Invest: React.FC<InvestProps> = ({userBalance,setBalance}) => {
                   borderRadius: "16px",
                   boxSizing: "border-box",
                   backgroundColor: "#333",
+                  filter: item.now>= item.goal? "blur(3px) grayscale(1)": "blur(0)",
                 }}
               >
                 <img
